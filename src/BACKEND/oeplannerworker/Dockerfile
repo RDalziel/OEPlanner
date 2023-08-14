@@ -17,6 +17,6 @@ RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
 # Copy source code
-COPY OEPlannerWorker .
+COPY oeplannerworker .
 
 CMD ["poetry", "run", "celery", "-A", "oeplannerworker.main", "worker", "--loglevel=info"]
