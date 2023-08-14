@@ -3,8 +3,9 @@ name: OEPlannerAPI
 on:
   push:
     paths:
-    - 'src/BACKEND/OEPlannerAPI/**'
-    - 'src/BACKEND/OEPlannerWorker/**'
+    - 'src/BACKEND/oeplannerapi/**'
+    - 'src/BACKEND/oeplannerworker/**'
+    - 'src/BACKEND/oeplannertasks/**'
     - '.github/workflows/api-deploy.yml'
 
 jobs:
