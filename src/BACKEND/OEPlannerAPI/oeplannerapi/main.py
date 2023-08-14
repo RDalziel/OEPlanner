@@ -7,20 +7,16 @@ from . import celery_app
 
 app = FastAPI()
 
-
 class CeleryTaskResponse(BaseModel):
     task_id: UUID4
-
 
 class TaskStatusResponse(BaseModel):
     task_id: UUID4
     status: str
     result: str | None
 
-
 class CeleryTaskIdList(BaseModel):
     task_ids: list[str]
-
 
 class CeleryTaskStatistics(BaseModel):
     total: int
@@ -31,7 +27,6 @@ class CeleryTaskStatistics(BaseModel):
     @property
     def success_rate(self) -> float:
         return (self.succeeded / self.total) if self.total > 0 else 1
-
 
 @app.get("/status/{task_id}", response_model=TaskStatusResponse)
 def status(task_id: UUID4) -> TaskStatusResponse:

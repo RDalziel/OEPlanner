@@ -47,7 +47,7 @@ This will start the FastAPI service on port 8080, Celery worker, RabbitMQ on the
 ## Accessing the services
 
 - FastAPI - http://localhost:8080/wait
-- RabbitMQ - http://localhost:15672 
+- RabbitMQ - http://localhost:15672  (User: guest, Pass: guest)
 - Flower - http://localhost:5555
 
 RabbitMQ and Flower provide admin UI's to monitor queues, workers, tasks, etc.

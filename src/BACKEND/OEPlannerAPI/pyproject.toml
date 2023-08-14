@@ -10,7 +10,7 @@ python = "^3.10"
 fastapi = "0.100.0"
 uvicorn = "0.23.1"
 celery = "^5.3.1"
-oeplannerworker = {path = "../OEPlannerWorker"}
+oeplannerworker = {path = "../oeplannerworker"}
 
 
 [build-system]
