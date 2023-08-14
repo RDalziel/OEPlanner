@@ -2,12 +2,12 @@ FROM python:3.10-slim
 # Create and change to the app directory
 WORKDIR /app
 
-COPY OEPlannerTasks oeplannertasks
+COPY oeplannertasks oeplannertasks
 
 WORKDIR /app/oeplannerworker
 
 # Copy pyproject.toml and poetry.lock
-COPY OEPlannerWorker/pyproject.toml OEPlannerWorker/poetry.lock ./
+COPY oeplannerworker/pyproject.toml oeplannerworker/poetry.lock ./
 
 # Install poetry
 RUN pip install poetry

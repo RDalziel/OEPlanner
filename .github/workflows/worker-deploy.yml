@@ -24,7 +24,7 @@ jobs:
       uses: snok/install-poetry@v1
 
     - name: Configure poetry and install dependencies
-      working-directory: ./src/BACKEND/OEPlannerWorker
+      working-directory: ./src/BACKEND/oeplannerworker
       run: |
         python -m venv antenv
         source antenv/bin/activate
@@ -39,6 +39,6 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ vars.WORKER_APP_SERVICE_NAME }}
-        package: ./src/BACKEND/OEPlannerWorker
+        package: ./src/BACKEND/oeplannerworker
         resource-group-name: ${{ vars.RG_NAME }}
         startup-command: "python -m celery -A oeplannerworker.celery_app worker --loglevel=info"

@@ -24,7 +24,7 @@ jobs:
       uses: snok/install-poetry@v1
 
     - name: Configure poetry and install dependencies
-      working-directory: ./src/BACKEND/OEPlannerAPI
+      working-directory: ./src/BACKEND/oeplannerapi
       run: |
         python -m venv antenv
         source antenv/bin/activate
@@ -39,6 +39,6 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ vars.API_APP_SERVICE_NAME }}
-        package: ./src/BACKEND/OEPlannerAPI
+        package: ./src/BACKEND/oeplannerapi
         resource-group-name: ${{ vars.RG_NAME }}
         startup-command: "python -m uvicorn oeplannerapi.main:app --host 0.0.0.0"

@@ -4,12 +4,12 @@ FROM python:3.10-slim
 # Create and change to the app directory
 WORKDIR /app
 
-COPY OEPlannerTasks oeplannertasks
+COPY oeplannertasks oeplannertasks
 
 WORKDIR /app/oeplannerapi
 
 # Copy pyproject.toml and poetry.lock
-COPY OEPlannerAPI/pyproject.toml OEPlannerAPI/poetry.lock ./
+COPY oeplannerapi/pyproject.toml oeplannerapi/poetry.lock ./
 
 # Install poetry
 RUN pip install poetry
@@ -19,7 +19,7 @@ RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
 # Copy source code
-COPY OEPlannerAPI .
+COPY oeplannerapi .
 
 # Expose port 80
 EXPOSE 80
