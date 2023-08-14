@@ -9,9 +9,7 @@ readme = "README.md"
 python = "^3.10"
 fastapi = "0.100.0"
 uvicorn = "0.23.1"
-celery = "^5.3.1"
-oeplannerworker = {path = "../oeplannerworker"}
-
+oeplannertasks = {path = "../oeplannertasks"}
 
 [build-system]
 requires = ["poetry-core"]

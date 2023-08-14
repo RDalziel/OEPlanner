@@ -4,7 +4,7 @@ FROM python:3.10-slim
 # Create and change to the app directory
 WORKDIR /app
 
-COPY OEPlannerWorker oeplannerworker
+COPY OEPlannerTasks oeplannertasks
 
 WORKDIR /app/oeplannerapi
 

@@ -1,20 +1,25 @@
 from fastapi import FastAPI
 from fastapi import Query
-from oeplannerworker import celery_app
+from oeplannertasks import celery_app
 from pydantic import UUID4, BaseModel
+from oeplannertasks import tasks
 
 app = FastAPI()
+celery = celery_app.app
 
 class CeleryTaskResponse(BaseModel):
     task_id: UUID4
+
 
 class TaskStatusResponse(BaseModel):
     task_id: UUID4
     status: str
     result: str | None
 
+
 class CeleryTaskIdList(BaseModel):
     task_ids: list[str]
+
 
 class CeleryTaskStatistics(BaseModel):
     total: int
@@ -25,6 +30,7 @@ class CeleryTaskStatistics(BaseModel):
     @property
     def success_rate(self) -> float:
         return (self.succeeded / self.total) if self.total > 0 else 1
+
 
 @app.get("/status/{task_id}", response_model=TaskStatusResponse)
 def status(task_id: UUID4) -> TaskStatusResponse:
@@ -40,5 +46,5 @@ def wait(
         seconds: int = Query(10, description="number of seconds to wait"),
         fail: bool = Query(False, description="cause the task to fail"),
 ) -> CeleryTaskResponse:
-    task = celery_app.wait_for.delay(seconds=seconds, fail=fail)
+    task = tasks.wait_for.delay(seconds=seconds, fail=fail)
     return CeleryTaskResponse(task_id=task.id)

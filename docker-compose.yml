@@ -10,13 +10,18 @@ services:
       dockerfile: oeplannerapi/Dockerfile
     ports:
       - "8080:80"
+    depends_on:
+      - rabbitmq
 
   oeplannerworker:
     environment:
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
+      - CELERY_TRANSPORT=RMQ
     build:
-      context: src/backend/oeplannerworker
-      dockerfile: Dockerfile
+      context: src/backend
+      dockerfile: oeplannerworker/Dockerfile
+    depends_on:
+      - rabbitmq
 
   flower:
     image: mher/flower
@@ -25,9 +30,11 @@ services:
     environment:
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
       - FLOWER_PORT=5555
+    depends_on:
+      - rabbitmq
 
   rabbitmq:
-      image: rabbitmq:3-management
-      ports:
-        - "5672:5672"
-        - "15672:15672"
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "oeplannerworker"
+name = "oeplannertasks"
 version = "0.1.0"
 description = ""
 authors = ["Richard Dalziel <RichardDalziel@outlook.com>"]
@@ -7,7 +7,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-oeplannertasks = {path = "../oeplannertasks"}
+celery = "^5.3.1"
+kombu = "^5.3.1"
+azure-servicebus = "^7.11.1"
+
 
 [build-system]
 requires = ["poetry-core"]

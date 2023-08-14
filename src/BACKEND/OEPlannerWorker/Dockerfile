@@ -1,9 +1,13 @@
 FROM python:3.10-slim
-
+# Create and change to the app directory
 WORKDIR /app
 
-# Copy pyproject.toml and poetry.locl
-COPY pyproject.toml poetry.lock ./
+COPY OEPlannerTasks oeplannertasks
+
+WORKDIR /app/oeplannerworker
+
+# Copy pyproject.toml and poetry.lock
+COPY OEPlannerWorker/pyproject.toml OEPlannerWorker/poetry.lock ./
 
 # Install poetry
 RUN pip install poetry
@@ -13,6 +17,6 @@ RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
 # Copy source code
-COPY . .
+COPY OEPlannerWorker .
 
-CMD ["poetry", "run", "celery", "-A", "oeplannerworker.celery_app", "worker", "--loglevel=info"]
+CMD ["poetry", "run", "celery", "-A", "oeplannerworker.main", "worker", "--loglevel=info"]
