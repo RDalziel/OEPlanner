@@ -40,7 +40,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' = {
   }
 }
 
-resource serviceBus 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
+resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: serviceBusName
   location: location
   sku: {
@@ -106,6 +106,13 @@ resource uiAppService 'Microsoft.Web/sites@2021-03-01' = {
   }
 }
 
+
+var serviceBusConnString = listKeys(serviceBus.id, serviceBus.apiVersion).primaryConnectionString
+var namespaceEndpoint = split(serviceBusConnString, ';')[0]
+var sharedAccessKeyName = split(namespaceEndpoint, '=')[0]
+var sharedAccessKey = split(namespaceEndpoint, '=')[1]
+var amqpUrl = 'amqp://${sharedAccessKeyName}:${sharedAccessKey}@${namespaceEndpoint}.servicebus.windows.net'
+
 resource workerAppService 'Microsoft.Web/sites@2021-03-01' = {
   name: workerAppServiceName
   location: location
@@ -132,10 +139,19 @@ resource workerAppService 'Microsoft.Web/sites@2021-03-01' = {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
           value: appInsights.properties.ConnectionString
         }
+        {
+          name: 'CELERYTRANSPORt'
+          value: 'ASB'
+        }
+        {
+          name: 'CELERY_BROKER_URL'
+          value: amqpUrl
+        }
       ] 
     }
   }
 }
+
 
 
 resource apiAppService 'Microsoft.Web/sites@2021-03-01' = {
@@ -165,8 +181,12 @@ resource apiAppService 'Microsoft.Web/sites@2021-03-01' = {
           value: appInsights.properties.ConnectionString
         }
         {
-          name: 'AZURE_SERVICE_BUS_NAMESPACE'
-          value: serviceBus.name
+          name: 'CELERYTRANSPORt'
+          value: 'ASB'
+        }
+        {
+          name: 'CELERY_BROKER_URL'
+          value: amqpUrl
         }
       ] 
     }
