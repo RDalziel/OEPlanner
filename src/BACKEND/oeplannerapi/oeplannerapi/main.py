@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+import traceback
 from fastapi import Query
 from oeplannertasks import celery_app
 from pydantic import UUID4, BaseModel
@@ -6,6 +8,16 @@ from oeplannertasks import tasks
 
 app = FastAPI()
 celery = celery_app.app
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    stack_trace = traceback.format_exc()
+    return JSONResponse(
+        status_code=500,
+        content={"message": str(exc), "stack_trace": stack_trace}
+    )
+
 
 class CeleryTaskResponse(BaseModel):
     task_id: UUID4
