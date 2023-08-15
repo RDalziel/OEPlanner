@@ -1,3 +1,4 @@
+from celery.result import AsyncResult
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import traceback
@@ -46,7 +47,7 @@ class CeleryTaskStatistics(BaseModel):
 
 @app.get("/status/{task_id}", response_model=TaskStatusResponse)
 def status(task_id: UUID4) -> TaskStatusResponse:
-    task_info = celery_app.app.AsyncResult(str(task_id))
+    task_info = AsyncResult(str(task_id))
     task_result = task_info.result
     if isinstance(task_result, Exception):
         task_result = None

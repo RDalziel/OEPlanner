@@ -42,4 +42,4 @@ jobs:
         app-name: ${{ vars.WORKER_APP_SERVICE_NAME }}
         package: ./src/BACKEND/oeplannerworker
         resource-group-name: ${{ vars.RG_NAME }}
-        startup-command: "python -m celery -A oeplannerworker.celery_app worker --loglevel=info"
+        startup-command: "python -m uvicorn oeplannerworker.main:app --host 0.0.0.0"
