@@ -107,11 +107,8 @@ resource uiAppService 'Microsoft.Web/sites@2021-03-01' = {
 }
 
 
-var serviceBusConnString = listKeys(serviceBus.id, serviceBus.apiVersion).primaryConnectionString
-var namespaceEndpoint = split(serviceBusConnString, ';')[0]
-var sharedAccessKeyName = split(namespaceEndpoint, '=')[0]
-var sharedAccessKey = split(namespaceEndpoint, '=')[1]
-var amqpUrl = 'amqp://${sharedAccessKeyName}:${sharedAccessKey}@${namespaceEndpoint}.servicebus.windows.net'
+var serviceBusEndpoint = '${serviceBus.id}/AuthorizationRules/RootManageSharedAccessKey' 
+var amqpUrl = 'amqps://RootManageSharedAccessKey:${listKeys(serviceBusEndpoint, serviceBus.apiVersion).primaryKey}@${serviceBus.name}.servicebus.windows.net'
 
 resource workerAppService 'Microsoft.Web/sites@2021-03-01' = {
   name: workerAppServiceName
