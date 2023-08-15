@@ -137,7 +137,7 @@ resource workerAppService 'Microsoft.Web/sites@2021-03-01' = {
           value: appInsights.properties.ConnectionString
         }
         {
-          name: 'CELERYTRANSPORt'
+          name: 'CELERY_TRANSPORT'
           value: 'ASB'
         }
         {
@@ -178,7 +178,7 @@ resource apiAppService 'Microsoft.Web/sites@2021-03-01' = {
           value: appInsights.properties.ConnectionString
         }
         {
-          name: 'CELERYTRANSPORt'
+          name: 'CELERY_TRANSPORT'
           value: 'ASB'
         }
         {
