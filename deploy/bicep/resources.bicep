@@ -108,7 +108,7 @@ resource uiAppService 'Microsoft.Web/sites@2021-03-01' = {
 
 
 var serviceBusEndpoint = '${serviceBus.id}/AuthorizationRules/RootManageSharedAccessKey' 
-var amqpUrl = 'amqps://RootManageSharedAccessKey:${listKeys(serviceBusEndpoint, serviceBus.apiVersion).primaryKey}@${serviceBus.name}.servicebus.windows.net'
+var amqpUrl = 'azureservicebus://RootManageSharedAccessKey:${listKeys(serviceBusEndpoint, serviceBus.apiVersion).primaryKey}@${serviceBus.name}.servicebus.windows.net'
 
 resource workerAppService 'Microsoft.Web/sites@2021-03-01' = {
   name: workerAppServiceName
