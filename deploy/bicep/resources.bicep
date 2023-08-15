@@ -137,10 +137,6 @@ resource workerAppService 'Microsoft.Web/sites@2021-03-01' = {
           value: appInsights.properties.ConnectionString
         }
         {
-          name: 'CELERY_TRANSPORT'
-          value: 'ASB'
-        }
-        {
           name: 'CELERY_BROKER_URL'
           value: amqpUrl
         }
@@ -176,10 +172,6 @@ resource apiAppService 'Microsoft.Web/sites@2021-03-01' = {
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
           value: appInsights.properties.ConnectionString
-        }
-        {
-          name: 'CELERY_TRANSPORT'
-          value: 'ASB'
         }
         {
           name: 'CELERY_BROKER_URL'
