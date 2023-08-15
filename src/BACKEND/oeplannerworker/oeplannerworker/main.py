@@ -7,7 +7,7 @@ celery = celery_app.app
 
 @app.on_event("startup")
 async def startup():
-    celery.start()
+    celery.Worker(app=celery).start()
 
 
 @app.get("/health")
