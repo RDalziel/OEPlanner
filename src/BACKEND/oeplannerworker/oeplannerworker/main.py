@@ -9,9 +9,10 @@ celery = celery_app.app
 async def startup():
     celery.start()
 
+
 @app.get("/health")
 async def health():
-  result = app.celery.control.ping()
-  if not result:
-    raise Exception("Celery ping failed!")
-  return {"status": "ok"}
+    result = celery.control.ping()
+    if not result:
+        raise Exception("Celery ping failed!")
+    return {"status": "ok"}
